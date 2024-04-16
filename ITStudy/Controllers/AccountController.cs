@@ -20,10 +20,19 @@ public class AccountController(
         return IsSuccess ? Ok() : BadRequest();
     }
 
+    [HttpGet("GetAll")]
+    public IActionResult GetAll()
+    {
+        var User = _mapper.Map<List<UsersDTO>>(_usersRepository.GetAll());
+        return Ok(User);
+    }
+
     [HttpDelete("Delete")]
     public IActionResult  Delete(long  id)
     {
         bool IsSuccess = _usersRepository.Delete(id);
         return IsSuccess ? Ok() : BadRequest();
     }
+
+
 }
