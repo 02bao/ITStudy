@@ -6,6 +6,15 @@ namespace ITStudy.Repository;
 
 public class UsersRepository(DataContext _context) : IUsersRepository
 {
+    public bool Delete(long Id)
+    {
+        Users user = _context.Users.SingleOrDefault(s => s.Id == Id);
+        if (user == null) { return false; } 
+        _context.Users.Remove(user);
+        _context.SaveChanges();
+        return true;
+    }
+
     public bool Regiter(Users_Register Regis)
     {
         Users UserEmail = _context.Users.SingleOrDefault(s => s.Email == Regis.Email);
