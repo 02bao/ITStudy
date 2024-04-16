@@ -2,6 +2,7 @@
 using ITStudy.DTO;
 using ITStudy.Interface;
 using ITStudy.Models;
+using ITStudy.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITStudy.Controllers;
@@ -17,7 +18,30 @@ public class AccountController(
     {
         var Account = _mapper.Map<Users_Register>(_DTO);
         bool IsSuccess = _usersRepository.Regiter(Account);
+        if (IsSuccess)
+        {
+            bool emailSent = SendRegisterEmail(_DTO.Email, _DTO.UserName);
+            if (!emailSent)
+            {
+                Console.WriteLine("Failed to send registration email to: " + _DTO.Email);
+            }
+        }
+
         return IsSuccess ? Ok() : BadRequest();
+    }
+    private bool SendRegisterEmail(string ReceiveEmails, string ReceiveName)
+    {
+        try
+        {
+            var Emails = new EmailService();
+            string Subject = "Đăng kí tài khoản thành công";
+            string Body = "Chào mừng bạn đã đăng kí tài khoản thành công.";
+            return Emails.SendEmail(ReceiveEmails, ReceiveName,Subject, Body);
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
     }
 
     [HttpGet("GetAll")]
