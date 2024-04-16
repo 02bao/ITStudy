@@ -19,4 +19,11 @@ public class AccountController(
         bool IsSuccess = _usersRepository.Regiter(Account);
         return IsSuccess ? Ok() : BadRequest();
     }
+
+    [HttpDelete("Delete")]
+    public IActionResult  Delete(long  id)
+    {
+        bool IsSuccess = _usersRepository.Delete(id);
+        return IsSuccess ? Ok() : BadRequest();
+    }
 }
