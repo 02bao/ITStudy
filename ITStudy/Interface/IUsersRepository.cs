@@ -6,5 +6,6 @@ namespace ITStudy.Interface
     {
         bool Regiter(Users_Register Regis);
         bool Delete(long Id);
+        ICollection<Users> GetAll();
     }
 }

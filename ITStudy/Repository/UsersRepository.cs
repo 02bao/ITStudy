@@ -15,6 +15,11 @@ public class UsersRepository(DataContext _context) : IUsersRepository
         return true;
     }
 
+    public ICollection<Users> GetAll()
+    {
+        return _context.Users.ToList();
+    }
+
     public bool Regiter(Users_Register Regis)
     {
         Users UserEmail = _context.Users.SingleOrDefault(s => s.Email == Regis.Email);
