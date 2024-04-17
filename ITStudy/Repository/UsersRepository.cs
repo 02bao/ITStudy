@@ -20,6 +20,11 @@ public class UsersRepository(DataContext _context) : IUsersRepository
         return _context.Users.ToList();
     }
 
+    public Users GetById(long UserId)
+    {
+        return _context.Users.SingleOrDefault(s => s.Id == UserId);
+    }
+
     public bool Regiter(Users_Register Regis)
     {
         Users UserEmail = _context.Users.SingleOrDefault(s => s.Email == Regis.Email);

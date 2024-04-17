@@ -51,6 +51,13 @@ public class AccountController(
         return Ok(User);
     }
 
+    [HttpGet("GetById")]
+    public IActionResult GetById([FromQuery] long UserId)
+    {
+        var user = _mapper.Map<UsersDTO>(_usersRepository.GetById(UserId));
+        return Ok(user);
+    }
+
     [HttpDelete("Delete")]
     public IActionResult  Delete(long  id)
     {
