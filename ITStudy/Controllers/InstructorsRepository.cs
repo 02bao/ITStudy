@@ -19,4 +19,18 @@ public class InstructorsRepository(
         bool IsSuccess = _instructorsRepository.CreateNew(UserId, teacher);
         return IsSuccess ? Ok(teacher) : BadRequest();
     }
+
+    [HttpGet("GetAll")]
+    public IActionResult GetAll()
+    {
+        var Instruc = _mapper.Map<List<InstructorsDTO>>(_instructorsRepository.GetAll());
+        return Ok(Instruc);
+    }
+
+    [HttpGet("GetById")]
+    public IActionResult GetById(long Id)
+    {
+        var Instruc = _mapper.Map<InstructorsDTO>(_instructorsRepository.GetById(Id));
+        return Ok(Instruc);
+    }
 }
