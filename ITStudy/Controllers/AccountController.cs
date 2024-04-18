@@ -58,6 +58,14 @@ public class AccountController(
         return Ok(user);
     }
 
+    [HttpPut("Update")]
+    public IActionResult Update([FromForm] UsersDTO _DTO,[FromForm] List<IFormFile> Images)
+    {
+        var users = _mapper.Map<Users>(_DTO);
+        bool IsSuccess = _usersRepository.Update(users, Images);
+        return IsSuccess ? Ok() : BadRequest();
+    }
+
     [HttpDelete("Delete")]
     public IActionResult  Delete(long  id)
     {
