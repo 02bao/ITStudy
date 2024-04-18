@@ -8,7 +8,7 @@ namespace ITStudy.Interface
         ICollection<Instructors> GetAll();
         Instructors GetById(long Id);
         List<Instructors> GetByUserId(long UserId);
-        bool Update(Instructors Instructors, List<IFormFile> Images);
+        bool Update(Instructors Instructors, IFormFile Images);
         bool Delete(long Id);
     }
 }

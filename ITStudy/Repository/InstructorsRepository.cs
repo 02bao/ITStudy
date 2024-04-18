@@ -24,7 +24,11 @@ namespace ITStudy.Repository
 
         public bool Delete(long Id)
         {
-            throw new NotImplementedException();
+            var teacher = _context.Instructors.SingleOrDefault(s => s.Id == Id);
+            if (teacher == null) { return false; }
+            _context.Instructors.Remove(teacher);
+            _context.SaveChanges() ;
+            return true;
         }
 
         public ICollection<Instructors> GetAll()
@@ -39,12 +43,42 @@ namespace ITStudy.Repository
 
         public List<Instructors> GetByUserId(long UserId)
         {
-            throw new NotImplementedException();
+            List<Instructors> Instruc = new List<Instructors>();
+            var users = _context.Instructors.Where(s => s.User.Id == UserId).ToList();
+            if(users == null) { return  Instruc; }
+            foreach( var user in users) 
+            {
+                Instruc.Add(new Instructors()
+                {
+                    Id = user.Id,
+                    TeacherName = user.TeacherName,
+                    Bio = user.Bio,
+                    Field = user.Field,
+                    Images = user.Images,
+                    CoursesTaught = user.CoursesTaught,
+                    Posts = user.Posts,
+                });
+            }
+            return Instruc;
         }
 
-        public bool Update(Instructors Instructors, List<IFormFile> Images)
+        public bool Update(Instructors Instructors,IFormFile Images)
         {
-            throw new NotImplementedException();
+            var Teacher = _context.Instructors.SingleOrDefault(s => s.Id == Instructors.Id);
+            if(Teacher == null) { return false; }
+            Teacher.TeacherName = Instructors.TeacherName;
+            Teacher.Bio = Instructors.Bio;
+            Teacher.Field = Instructors.Field;
+            Teacher.CoursesTaught  = Instructors.CoursesTaught;
+            Teacher.Posts = Instructors.Posts;
+            if(Images != null)
+            {
+                CloudinaryRepository cloudinary = new CloudinaryRepository();
+                string Url = cloudinary.uploadFile(Images);
+                if(!string.IsNullOrEmpty(Url) ) { Teacher.Images = Url; }
+            }
+            _context.SaveChanges();
+            return true;
         }
     }
 }
