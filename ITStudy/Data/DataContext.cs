@@ -10,6 +10,7 @@ namespace ITStudy.Data
             
         }
         public DbSet<Users> Users { get; set; }
+        public DbSet<Instructors> Instructors { get; set; }
         public static string configsql = "Host=localhost:5432;Database=ITStudy;Username=postgres;Password=postgres";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

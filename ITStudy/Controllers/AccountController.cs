@@ -73,5 +73,20 @@ public class AccountController(
         return IsSuccess ? Ok() : BadRequest();
     }
 
+    //[HttpPost("Anh")]
+    //public IActionResult Anh(IFormFile anh)
+    //{
+    //    using (var memoryStream = new MemoryStream())
+    //    {
+    //        anh.CopyTo(memoryStream);
+    //        byte[] imageBytes = memoryStream.ToArray();
 
+    //        // Thay đổi kiểu MIME tùy theo định dạng ảnh của bạn
+    //        string contentType = "image/jpeg"; // Đây là ví dụ cho định dạng ảnh JPEG
+
+    //        // Trả về dữ liệu ảnh với kiểu MIME tương ứng
+    //        return File(imageBytes, contentType);
+    //    }
+    //}
+   
 }

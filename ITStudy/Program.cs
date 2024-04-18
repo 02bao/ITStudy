@@ -20,6 +20,7 @@ namespace ITStudy
             builder.Services.AddDbContext<DataContext>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+            builder.Services.AddScoped<IInstructorsRepository, InstructorsRepository>();
 
             var app = builder.Build();
 
