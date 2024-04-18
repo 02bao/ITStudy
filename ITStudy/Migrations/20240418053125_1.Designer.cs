@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ITStudy.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240415074515_1")]
+    [Migration("20240418053125_1")]
     partial class _1
     {
         /// <inheritdoc />
@@ -23,6 +23,45 @@ namespace ITStudy.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ITStudy.Models.Instructors", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("CoursesTaught")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Field")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Images")
+                        .HasColumnType("text");
+
+                    b.Property<long>("Posts")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TeacherName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Instructors");
+                });
 
             modelBuilder.Entity("ITStudy.Models.Users", b =>
                 {
@@ -58,6 +97,17 @@ namespace ITStudy.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ITStudy.Models.Instructors", b =>
+                {
+                    b.HasOne("ITStudy.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
