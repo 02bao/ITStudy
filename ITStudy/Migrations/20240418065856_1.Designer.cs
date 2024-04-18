@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ITStudy.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240418053125_1")]
+    [Migration("20240418065856_1")]
     partial class _1
     {
         /// <inheritdoc />
@@ -87,6 +87,13 @@ namespace ITStudy.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Token")
                         .IsRequired()
                         .HasColumnType("text");
 

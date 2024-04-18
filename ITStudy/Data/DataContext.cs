@@ -18,5 +18,12 @@ namespace ITStudy.Data
             optionsBuilder.UseNpgsql(configsql);
             optionsBuilder.EnableSensitiveDataLogging();
         }
+        public  Random random = new Random();
+        public  string randomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
     }
 }

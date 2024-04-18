@@ -12,7 +12,7 @@ public class UsersRepository(DataContext _context) : IUsersRepository
         if (user == null) { return false; } 
         _context.Users.Remove(user);
         _context.SaveChanges();
-        return true;
+        return true;    
     }
 
     public ICollection<Users> GetAll()
@@ -25,10 +25,19 @@ public class UsersRepository(DataContext _context) : IUsersRepository
         return _context.Users.SingleOrDefault(s => s.Id == UserId);
     }
 
-    public bool Regiter(Users_Register Regis)
+    public Users? Login(Users_Login Login)
+    {
+        Users? users = _context.Users.Where(s => s.UserName == Login.UserName &&
+                                            s.Password == Login.Password &&
+                                            s.Status == Status_Register.Active).FirstOrDefault();
+        if (users == null) { return null; }
+        return users;
+    }
+
+    public string Regiter(Users_Register Regis)
     {
         Users UserEmail = _context.Users.SingleOrDefault(s => s.Email == Regis.Email);
-        if (UserEmail != null) { return false; }
+        if (UserEmail != null) { return ""; }
         Users NewAccount = new Users()
         {
             UserName = Regis.UserName,
@@ -36,8 +45,19 @@ public class UsersRepository(DataContext _context) : IUsersRepository
             Phone = Regis.Phone,
             Password = Regis.Password,
             Role = Regis.Role,
+            Token = _context.randomString(20),
+            Status = Status_Register.Wating,
         };
         _context.Users.Add(NewAccount);
+        _context.SaveChanges();
+        return NewAccount.Token;
+    }
+
+    public bool RejectUser(string Tokens)
+    {
+        Users? user = _context.Users.SingleOrDefault(s => s.Token == Tokens);
+        if (user == null) { return false; }
+        _context.Users.Remove(user);
         _context.SaveChanges();
         return true;
     }
@@ -61,6 +81,16 @@ public class UsersRepository(DataContext _context) : IUsersRepository
             }
         }
         _context.Users.Update(users);
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool VerifyUser(string Tokens)
+    {
+        Users? user = _context.Users.SingleOrDefault(s => s.Token == Tokens);
+        if (user == null) { return false;}
+        user.Status = Status_Register.Active;
+        user.Token = string.Empty;
         _context.SaveChanges();
         return true;
     }

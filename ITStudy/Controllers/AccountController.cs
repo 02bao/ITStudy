@@ -3,6 +3,7 @@ using ITStudy.DTO;
 using ITStudy.Interface;
 using ITStudy.Models;
 using ITStudy.Repository;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITStudy.Controllers;
@@ -11,39 +12,47 @@ namespace ITStudy.Controllers;
 [Route("api/[controller]")]
 public class AccountController(
     IUsersRepository _usersRepository,
+    IEmailService _emailService,
     IMapper _mapper) : ControllerBase
 {
     [HttpPost("Register")]
     public IActionResult Register([FromBody] Users_RegisterDTO _DTO)
     {
         var Account = _mapper.Map<Users_Register>(_DTO);
-        bool IsSuccess = _usersRepository.Regiter(Account);
-        if (IsSuccess)
+        string Token = _usersRepository.Regiter(Account);
+        if (Token == "") { return BadRequest(); }
+
+        bool emailSent = _emailService.SendRegisterEmail(_DTO.Email, _DTO.UserName, Token);
+        if (!emailSent)
         {
-            bool emailSent = SendRegisterEmail(_DTO.Email, _DTO.UserName);
-            if (!emailSent)
-            {
-                Console.WriteLine("Failed to send registration email to: " + _DTO.Email);
-            }
+            Console.WriteLine("Failed to send registration email to: " + _DTO.Email);
         }
 
-        return IsSuccess ? Ok() : BadRequest();
+        return emailSent ? Ok() : BadRequest();
     }
-    private bool SendRegisterEmail(string ReceiveEmails, string ReceiveName)
+
+
+    [HttpGet("Verify/{Tokens}")]
+    public IActionResult Verify(string Tokens)
     {
-        try
-        {
-            var Emails = new EmailService();
-            string Subject = "Đăng kí tài khoản thành công";
-            string Body = "Chào mừng bạn đã đăng kí tài khoản thành công.";
-            return Emails.SendEmail(ReceiveEmails, ReceiveName,Subject, Body);
-        }
-        catch(Exception ex)
-        {
-            return false;
-        }
+        bool IsSuccess = _usersRepository.VerifyUser(Tokens);
+        return IsSuccess ? Ok("Verify Successfully") : BadRequest();
     }
 
+    [HttpGet("Reject")]
+    public IActionResult Reject(string Tokens)
+    {
+        bool IsSuccess = _usersRepository.RejectUser(Tokens);
+        return IsSuccess ? Ok("Reject Successfully") : BadRequest();
+    }
+
+    [HttpPost("Login")]
+    public IActionResult Login([FromBody] Users_Login _DTO)
+    {
+        var user = _mapper.Map<Users_LoginDTO>(_usersRepository.Login(_DTO));
+        if(user == null) { return BadRequest(); }
+        return Ok(user);
+    }
     [HttpGet("GetAll")]
     public IActionResult GetAll()
     {
@@ -59,7 +68,7 @@ public class AccountController(
     }
 
     [HttpPut("Update")]
-    public IActionResult Update([FromForm] UsersDTO _DTO,[FromForm] List<IFormFile> Images)
+    public IActionResult Update([FromForm] UsersDTO _DTO, [FromForm] List<IFormFile> Images)
     {
         var users = _mapper.Map<Users>(_DTO);
         bool IsSuccess = _usersRepository.Update(users, Images);
@@ -67,7 +76,7 @@ public class AccountController(
     }
 
     [HttpDelete("Delete")]
-    public IActionResult  Delete(long  id)
+    public IActionResult Delete(long id)
     {
         bool IsSuccess = _usersRepository.Delete(id);
         return IsSuccess ? Ok() : BadRequest();
@@ -88,5 +97,5 @@ public class AccountController(
     //        return File(imageBytes, contentType);
     //    }
     //}
-   
+
 }
