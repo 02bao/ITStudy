@@ -23,6 +23,8 @@ namespace ITStudy
             builder.Services.AddScoped<IInstructorsRepository, InstructorsRepository>();
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IPostRepository, PostsRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICoursesRepository, CoursesRepository>();
 
             var app = builder.Build();
 
