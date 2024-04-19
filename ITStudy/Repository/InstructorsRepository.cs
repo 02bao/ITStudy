@@ -54,7 +54,7 @@ namespace ITStudy.Repository
                     TeacherName = user.TeacherName,
                     Bio = user.Bio,
                     Field = user.Field,
-                    Images = user.Images,
+                    Avatars = user.Avatars,
                     CoursesTaught = user.CoursesTaught,
                     Posts = user.Posts,
                 });
@@ -62,7 +62,7 @@ namespace ITStudy.Repository
             return Instruc;
         }
 
-        public bool Update(Instructors Instructors,IFormFile Images)
+        public bool Update(Instructors Instructors,List<IFormFile> Images)
         {
             var Teacher = _context.Instructors.SingleOrDefault(s => s.Id == Instructors.Id);
             if(Teacher == null) { return false; }
@@ -74,9 +74,10 @@ namespace ITStudy.Repository
             if(Images != null)
             {
                 CloudinaryRepository cloudinary = new CloudinaryRepository();
-                string Url = cloudinary.uploadFile(Images);
-                if(!string.IsNullOrEmpty(Url) ) { Teacher.Images = Url; }
+                string Url = cloudinary.uploadFile(Images[0]);
+                if(!string.IsNullOrEmpty(Url) ) { Teacher.Avatars = Url; }
             }
+            _context.Instructors.Update(Teacher);
             _context.SaveChanges();
             return true;
         }

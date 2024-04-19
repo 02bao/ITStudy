@@ -8,15 +8,13 @@ namespace ITStudy.Mapper
     {
         public Mapping()
         {
-            CreateMap<Users , UsersDTO>();
-            CreateMap<UsersDTO , Users>();
-            CreateMap<Users_Register , Users_RegisterDTO>();
-            CreateMap<Users_RegisterDTO , Users_Register>();
-            CreateMap<Instructors , InstructorsDTO>();
-            CreateMap<InstructorsDTO , Instructors>();
-            CreateMap<Instructors_Create , Instructors_CreateDTO>();
-            CreateMap<Instructors_CreateDTO , Instructors_Create>();
-            CreateMap<  Users_LoginDTO,Users > ().ReverseMap();
+            CreateMap<Users , UsersDTO>().ReverseMap();
+            CreateMap<Users_Register , Users_RegisterDTO>().ReverseMap();
+            CreateMap<Instructors , InstructorsDTO>().ReverseMap();
+            CreateMap<Instructors_Create , Instructors_CreateDTO>().ReverseMap();
+            CreateMap<Users_LoginDTO,Users > ().ReverseMap();
+            CreateMap<Posts,PostsDTO > ().ReverseMap();
+            CreateMap<Posts_Create,Posts_CreateDTO > ().ReverseMap();
         }
     }
 }

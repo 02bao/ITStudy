@@ -46,7 +46,7 @@ public class InstructorsRepository(
     public IActionResult Update([FromForm] InstructorsDTO _DTO,[FromForm] List<IFormFile> Images)
     {
         var Teacher = _mapper.Map<Instructors>(_DTO);
-        bool IsSuccess = _instructorsRepository.Update(Teacher, Images[0]);
+        bool IsSuccess = _instructorsRepository.Update(Teacher, Images);
         return IsSuccess ? Ok(): BadRequest();
     }
 

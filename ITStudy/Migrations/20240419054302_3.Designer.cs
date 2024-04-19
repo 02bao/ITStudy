@@ -3,6 +3,7 @@ using System;
 using ITStudy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ITStudy.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240419054302_3")]
+    partial class _3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +33,6 @@ namespace ITStudy.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Avatars")
-                        .HasColumnType("text");
-
                     b.Property<string>("Bio")
                         .IsRequired()
                         .HasColumnType("text");
@@ -42,6 +42,9 @@ namespace ITStudy.Migrations
 
                     b.Property<string>("Field")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Images")
                         .HasColumnType("text");
 
                     b.Property<long>("Posts")
