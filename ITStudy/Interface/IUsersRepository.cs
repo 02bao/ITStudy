@@ -11,6 +11,5 @@ namespace ITStudy.Interface
         Users GetById(long UserId);
         bool Update(Users User, List<IFormFile> Images);
         bool VerifyUser(string Tokens);
-        bool RejectUser(string Tokens);
     }
 }

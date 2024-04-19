@@ -53,14 +53,6 @@ public class UsersRepository(DataContext _context) : IUsersRepository
         return NewAccount.Token;
     }
 
-    public bool RejectUser(string Tokens)
-    {
-        Users? user = _context.Users.SingleOrDefault(s => s.Token == Tokens);
-        if (user == null) { return false; }
-        _context.Users.Remove(user);
-        _context.SaveChanges();
-        return true;
-    }
 
     public bool Update(Users User, List<IFormFile> Images)
     {

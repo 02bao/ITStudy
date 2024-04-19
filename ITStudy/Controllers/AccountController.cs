@@ -39,12 +39,6 @@ public class AccountController(
         return IsSuccess ? Ok("Verify Successfully") : BadRequest();
     }
 
-    [HttpGet("Reject")]
-    public IActionResult Reject(string Tokens)
-    {
-        bool IsSuccess = _usersRepository.RejectUser(Tokens);
-        return IsSuccess ? Ok("Reject Successfully") : BadRequest();
-    }
 
     [HttpPost("Login")]
     public IActionResult Login([FromBody] Users_Login _DTO)
