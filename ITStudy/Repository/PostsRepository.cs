@@ -80,7 +80,7 @@ public class PostsRepository(DataContext _context) : IPostRepository
         {
             CloudinaryRepository cloudinary = new CloudinaryRepository();
             string Url = cloudinary.uploadFile(Images[0]);
-            if (string.IsNullOrEmpty(Url)) { post.Avatar = Url; }
+            if (!string.IsNullOrEmpty(Url)) { post.Avatar = Url; }
         }
         _context.Posts.Update(post);
         _context.SaveChanges();

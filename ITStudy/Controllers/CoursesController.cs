@@ -24,7 +24,7 @@ namespace ITStudy.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            var Instruc = _mapper.Map<List<Courses>>(_coursesRepository.GetAll());
+            var Instruc = _mapper.Map<List<CoursesDTO>>(_coursesRepository.GetAll());
             return Ok(Instruc);
         }
 

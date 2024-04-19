@@ -11,6 +11,7 @@ public class CoursesDTO
     public long Price { get; set; } = 0;
     public int Durations { get; set; } = 0;
     public float Rating { get; set; } = 0;
+    public int? LectureCount { get; set; } = 0;
     public DateTime? CreateAt { get; set; } = DateTime.UtcNow;
 }
 

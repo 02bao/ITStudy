@@ -8,7 +8,7 @@ namespace ITStudy.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class InstructorsRepository(
+public class InstructorsController(
     IInstructorsRepository _instructorsRepository,
     IMapper _mapper) : ControllerBase
 {
