@@ -72,9 +72,8 @@ namespace ITStudy.Migrations
                     b.Property<string>("Avatar")
                         .HasColumnType("text");
 
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int?>("CommentCount")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Content")
                         .IsRequired()

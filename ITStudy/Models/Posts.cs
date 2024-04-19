@@ -7,8 +7,8 @@ public class Posts
     public string Title { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
     public string? Avatar { get; set; }
-    public string Comment { get; set; } = string.Empty;
-    public DateTime PostTime { get; set; } = DateTime.UtcNow;
+    public int? CommentCount { get; set; } = 0;
+    public DateTime? PostTime { get; set; } = DateTime.UtcNow;
     public int Likes { get; set; } = 0;
     public int Dislikes { get; set; } = 0;
 }

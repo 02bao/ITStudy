@@ -8,6 +8,6 @@ public interface IPostRepository
     ICollection<Posts> GetAll();
     Posts GetById(long Id);
     List<Posts> GetByTeacherId(long TeacherId);
-    bool Update(Posts posts, List<IFormFile> Avatars);
+    bool Update(Posts posts, List<IFormFile> Images);
     bool Delete(long Id);
 }
