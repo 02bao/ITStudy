@@ -20,11 +20,17 @@ namespace ITStudy.Controllers
             return  IsSuccess ? Ok() : BadRequest();
         }
 
-        [HttpGet("GetByUserId")]
+        [HttpGet("GetByStudentId")]
         public IActionResult GetByStudentId( long UserId)
         {
-            var carts = _cartRepository.GetByUserId(UserId);
+            var carts = _cartRepository.GetByStudentId(UserId);
             return Ok(carts);
+        }
+        [HttpDelete("RemoveCartItem")]
+        public IActionResult RemoveCartItem(long CartItemId)
+        {
+            bool IsSuccess = _cartRepository.RemoveCartItem(CartItemId);
+            return IsSuccess? Ok() : BadRequest();
         }
     }
 }

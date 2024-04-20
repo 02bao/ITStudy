@@ -48,13 +48,13 @@ namespace ITStudy.Repository
             return true;
         }
 
-        public List<Cart_Get> GetByUserId(long UserId)
+        public List<Cart_Get> GetByStudentId(long StudentId)
         {
             List<Cart_Get> carts = new List<Cart_Get>();
             var student = _context.Carts.Include(s => s.CartItems)
                                       .ThenInclude(s => s.Courses)
                                       .ThenInclude(s => s.Teacher)
-                                      .Where(s => s.Student.Id == UserId)
+                                      .Where(s => s.Student.Id == StudentId)
                                       .ToList();
             if(student == null) { return carts; }
             foreach (var cart in student)
@@ -79,7 +79,11 @@ namespace ITStudy.Repository
 
         public bool RemoveCartItem(long CartItemId)
         {
-            throw new NotImplementedException();
+            var cartitem = _context.CartItems.SingleOrDefault(s => s.Id == CartItemId);
+            if(cartitem == null) { return false; }
+            _context.CartItems.Remove(cartitem);
+            _context.SaveChanges();
+            return true;
         }
     }
 }
