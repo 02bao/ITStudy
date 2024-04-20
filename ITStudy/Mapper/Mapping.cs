@@ -23,6 +23,8 @@ namespace ITStudy.Mapper
             CreateMap<Lectures_Create,Lectures_CreateDTO> ().ReverseMap();
             CreateMap<Student,StudentDTO> ().ReverseMap();
             CreateMap<Student_Create,Student_CreateDTO> ().ReverseMap();
+            CreateMap<Cart,CartDTO> ().ReverseMap();
+            CreateMap<CartItem,CartItemDTO> ().ReverseMap();
         }
     }
 }
