@@ -6,6 +6,7 @@ public class CartDTO
 {
     public long Id { get; set; }
     public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
-    public long TotalPrice { get; set; } = 0;
-    public string QuantityCourse { get; set; } = string.Empty;
+    public long? TotalPrice { get; set; } = 0;
+    public long? QuantityCourse { get; set; } = 0;
 }
+
