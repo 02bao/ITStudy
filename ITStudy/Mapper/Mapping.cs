@@ -21,6 +21,8 @@ namespace ITStudy.Mapper
             CreateMap<Courses_Create,Courses_CreateDTO> ().ReverseMap();
             CreateMap<Lectures,LecturesDTO> ().ReverseMap();
             CreateMap<Lectures_Create,Lectures_CreateDTO> ().ReverseMap();
+            CreateMap<Student,StudentDTO> ().ReverseMap();
+            CreateMap<Student_Create,Student_CreateDTO> ().ReverseMap();
         }
     }
 }
