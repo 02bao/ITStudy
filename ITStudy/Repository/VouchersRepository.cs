@@ -1,6 +1,7 @@
 ﻿using ITStudy.Data;
 using ITStudy.Interface;
 using ITStudy.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ITStudy.Repository;
 
@@ -18,6 +19,7 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
             {
                 Title = Vouchers.Title,
                 Discount = Vouchers.Discount,
+                CourseId = null,
                 Public_Date = Vouchers.Public_Date,
                 Expire_Date = ExpireTime.ToUniversalTime(),
                 Teacher = teacher,
@@ -34,6 +36,7 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
             {
                 Title = Vouchers.Title,
                 Discount = Vouchers.Discount,
+                CourseId = course.Id,
                 Public_Date = Vouchers.Public_Date,
                 Expire_Date = ExpireTime.ToUniversalTime(),
                 Teacher = teacher,
@@ -77,6 +80,7 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
                 Id = voucher.Id,
                 Title = voucher.Title,
                 Discount = voucher.Discount,
+                CourseId = voucher.CourseId,
                 Public_Date = voucher.Public_Date,
                 Expire_Date = voucher.Expire_Date,
             });
@@ -84,5 +88,30 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
         return vouchers;
     }
 
-    
+    //public List<Vouchers> StudentSeeVoucher(long StudentId)
+    //{
+    //    List<Vouchers> Vouchers = new List<Vouchers>();
+    //    Student? student = _context.Students.Include(s => s.Voucher)
+    //                                       .Where(s => s.Id == StudentId)
+    //                                       .SingleOrDefault();
+    //    if(student == null) { return Vouchers; }
+    //    List<Vouchers> AllVouchers = student.Voucher.ToList();
+    //    if(AllVouchers != null && AllVouchers.Any())
+    //    {
+    //        AllVouchers = AllVouchers.Where(s => s.Expire_Date > DateTime.UtcNow).ToList();
+    //        foreach(var voucher in AllVouchers)
+    //        {
+    //            long? CourseId = null;
+    //            if(voucher.Course != null) { CourseId = voucher.Course.Id;}
+    //            Vouchers.Add(new Vouchers()
+    //            {
+    //                Id = voucher.Id,
+    //                Title = voucher.Title,
+    //                Discount = voucher.Discount,
+    //                Public_Date = voucher.Public_Date,
+    //                Expire_Date = voucher.Expire_Date,
+    //            });
+    //        }
+    //    }
+    //}
 }

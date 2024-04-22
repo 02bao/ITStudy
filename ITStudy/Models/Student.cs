@@ -8,7 +8,7 @@ public class Student
     public string Bio { get; set; } = string.Empty;
     public string Field { get; set; } = string.Empty;
     public List<Courses> Courses { get; set; }
-
+    public List<Vouchers>? Voucher { get; set; }
 }
 
 public class Student_Create
