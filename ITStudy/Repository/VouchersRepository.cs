@@ -88,30 +88,49 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
         return vouchers;
     }
 
-    //public List<Vouchers> StudentSeeVoucher(long StudentId)
-    //{
-    //    List<Vouchers> Vouchers = new List<Vouchers>();
-    //    Student? student = _context.Students.Include(s => s.Voucher)
-    //                                       .Where(s => s.Id == StudentId)
-    //                                       .SingleOrDefault();
-    //    if(student == null) { return Vouchers; }
-    //    List<Vouchers> AllVouchers = student.Voucher.ToList();
-    //    if(AllVouchers != null && AllVouchers.Any())
-    //    {
-    //        AllVouchers = AllVouchers.Where(s => s.Expire_Date > DateTime.UtcNow).ToList();
-    //        foreach(var voucher in AllVouchers)
-    //        {
-    //            long? CourseId = null;
-    //            if(voucher.Course != null) { CourseId = voucher.Course.Id;}
-    //            Vouchers.Add(new Vouchers()
-    //            {
-    //                Id = voucher.Id,
-    //                Title = voucher.Title,
-    //                Discount = voucher.Discount,
-    //                Public_Date = voucher.Public_Date,
-    //                Expire_Date = voucher.Expire_Date,
-    //            });
-    //        }
-    //    }
-    //}
+    public bool StudentSaveVouchers(long StudentId, long VouchersId)
+    {
+        var student = _context.Students.Include(s => s.Voucher)
+                                       .SingleOrDefault(s => s.Id == StudentId);
+        if(student == null) { return false;}
+        var voucher = _context.Vouchers.SingleOrDefault(s => s.Id == VouchersId &&
+                                                        s.Expire_Date > DateTime.UtcNow &&
+                                                        s.Student == null);
+        if(voucher == null) { return false; }
+        if(student.Voucher == null) { student.Voucher = new List<Vouchers>(); }
+        else if(student.Voucher.Contains(voucher)) { return false; }
+        voucher.Student = student;
+        student.Voucher.Add(voucher);
+        _context.SaveChanges();
+        return true;
+    }
+
+    public List<Vouchers> StudentSeeVoucher(long StudentId)
+    {
+        List<Vouchers> Vouchers = new List<Vouchers>();
+        Student? student = _context.Students.Include(s => s.Voucher)
+                                           .Where(s => s.Id == StudentId)
+                                           .SingleOrDefault();
+        if (student == null) { return Vouchers; }
+        List<Vouchers> AllVouchers = student.Voucher.ToList();
+        if (AllVouchers != null && AllVouchers.Any())
+        {
+            AllVouchers = AllVouchers.Where(s => s.Expire_Date > DateTime.UtcNow).ToList();
+            foreach (var voucher in AllVouchers)
+            {
+                long? CourseIds = null;
+                if (voucher.Course != null) { CourseIds = voucher.Course.Id; }
+                Vouchers.Add(new Vouchers()
+                {
+                    Id = voucher.Id,
+                    Title = voucher.Title,
+                    Discount = voucher.Discount,
+                    CourseId = CourseIds,
+                    Public_Date = voucher.Public_Date,
+                    Expire_Date = voucher.Expire_Date,
+                });
+            }
+        }
+        return Vouchers;
+    }
 }

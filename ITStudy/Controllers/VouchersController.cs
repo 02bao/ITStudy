@@ -42,7 +42,19 @@ public class VouchersController(
         var Instruc = _mapper.Map<List<VouchersDTO>>(_vouchersRepository.GetByTeacherId(TeacherId));
         return Ok(Instruc);
     }
+    [HttpPost("StudentSaveVouchers")]
+    public IActionResult StudentSaveVouchers([FromQuery] long StudentId, [FromQuery] long VouchersId)
+    {
+        bool IsSuccess = _vouchersRepository.StudentSaveVouchers(StudentId, VouchersId);
+        return IsSuccess ? Ok() : BadRequest();
+    }
 
+    [HttpGet("StudentSeeVoucher")]
+    public IActionResult StudentSeeVoucher([FromQuery] long StudentId)
+    {
+        var Instruc = _mapper.Map<List<VouchersDTO>>(_vouchersRepository.StudentSeeVoucher(StudentId));
+        return Ok(Instruc);
+    }
 
     [HttpDelete("Delete")]
     public IActionResult Delete(long Id)
@@ -50,4 +62,5 @@ public class VouchersController(
         bool IsSuccess = _vouchersRepository.Delete(Id);
         return IsSuccess ? Ok() : BadRequest();
     }
+
 }

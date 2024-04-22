@@ -9,6 +9,7 @@ namespace ITStudy.Interface
         Vouchers GetById(long VoucherId);
         List<Vouchers> GetByTeacherId(long TeacherId);
         bool Delete(long VoucherId);
-       //List<Vouchers> StudentSeeVoucher ( long StudentId);
+       List<Vouchers> StudentSeeVoucher ( long StudentId);
+        bool StudentSaveVouchers(long StudentId, long VouchersId);
     }
 }
