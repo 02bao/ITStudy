@@ -29,6 +29,7 @@ namespace ITStudy
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<ICartRepository, CartRepository>();
             builder.Services.AddScoped<IVouchersRepository, VouchersRepository>();
+            builder.Services.AddScoped<IBuycoursesRepository, BuyCoursesRepository>();
 
             var app = builder.Build();
 

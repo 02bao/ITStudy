@@ -4,7 +4,7 @@ public class VouchersDTO
 {
     public long Id { get; set; }
     public string Title { get; set; } = string.Empty;
-    public int Discount { get; set; } = 0;
+    public long Discount { get; set; } = 0;
     public long? CourseId { get; set; } = null;
     public DateTime? Public_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
     public DateTime? Expire_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
