@@ -40,12 +40,19 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
                 Course = course,
                 Student = null,
             };
+            _context.Vouchers.Add(OneCourse);
+            _context.SaveChanges();
+            return true;
         }
     }
 
     public bool Delete(long VoucherId)
     {
-        throw new NotImplementedException();
+        var voucher = _context.Vouchers.SingleOrDefault(s => s.Id == VoucherId);
+        if (voucher == null) { return false; }
+        _context.Vouchers.Remove(voucher);
+        _context.SaveChanges();
+        return true;
     }
 
     public ICollection<Vouchers> GetAll()
@@ -55,16 +62,27 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
 
     public Vouchers GetById(long VoucherId)
     {
-        throw new NotImplementedException();
+        return _context.Vouchers.SingleOrDefault(s => s.Id == VoucherId);
     }
 
     public List<Vouchers> GetByTeacherId(long TeacherId)
     {
-        throw new NotImplementedException();
+        List<Vouchers> vouchers = new List<Vouchers>();
+        var teacher = _context.Vouchers.Where(s => s.Teacher.Id == TeacherId).ToList();
+        if(teacher == null) { return vouchers; }
+        foreach(var voucher in teacher)
+        {
+            vouchers.Add(new Vouchers()
+            {
+                Id = voucher.Id,
+                Title = voucher.Title,
+                Discount = voucher.Discount,
+                Public_Date = voucher.Public_Date,
+                Expire_Date = voucher.Expire_Date,
+            });
+        }
+        return vouchers;
     }
 
-    public bool Update(Vouchers Vouchers)
-    {
-        throw new NotImplementedException();
-    }
+    
 }

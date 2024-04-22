@@ -8,7 +8,6 @@ namespace ITStudy.Interface
         ICollection<Vouchers> GetAll();
         Vouchers GetById(long VoucherId);
         List<Vouchers> GetByTeacherId(long TeacherId);
-        bool Update(Vouchers Vouchers);
         bool Delete(long VoucherId);    
     }
 }

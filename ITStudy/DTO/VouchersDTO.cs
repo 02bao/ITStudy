@@ -16,3 +16,4 @@ public class Vouchers_AddDTO
     public DateTime? Public_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
     public DateTime? Expire_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
 }
+

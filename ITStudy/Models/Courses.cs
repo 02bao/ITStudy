@@ -14,6 +14,7 @@ public class Courses
     public float Rating { get; set; } = 0;
     public int? LectureCount { get; set; } = 0;
     public DateTime? CreateAt { get; set; } = DateTime.UtcNow;
+    public List<Vouchers>? Voucher { get; set; }
 }
 
 public class Courses_Create
