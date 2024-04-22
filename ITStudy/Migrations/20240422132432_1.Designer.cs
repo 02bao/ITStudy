@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ITStudy.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240420074829_8")]
-    partial class _8
+    [Migration("20240422132432_1")]
+    partial class _1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,45 @@ namespace ITStudy.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ITStudy.Models.BuyCourses", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("CourseName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("PriceCourse")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("PurchasedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("StudentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TeacherId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TotalAmount")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("BuyCourses");
+                });
 
             modelBuilder.Entity("ITStudy.Models.Cart", b =>
                 {
@@ -60,6 +99,9 @@ namespace ITStudy.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<long?>("BuyCoursesId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("CartId")
                         .HasColumnType("bigint");
 
@@ -76,6 +118,8 @@ namespace ITStudy.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BuyCoursesId");
 
                     b.HasIndex("CartId");
 
@@ -350,6 +394,69 @@ namespace ITStudy.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("ITStudy.Models.Vouchers", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CourseId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Discount")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("Expire_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("Public_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("StudentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("TeacherId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Vouchers");
+                });
+
+            modelBuilder.Entity("ITStudy.Models.BuyCourses", b =>
+                {
+                    b.HasOne("ITStudy.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ITStudy.Models.Instructors", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Teacher");
+                });
+
             modelBuilder.Entity("ITStudy.Models.Cart", b =>
                 {
                     b.HasOne("ITStudy.Models.Student", "Student")
@@ -361,6 +468,10 @@ namespace ITStudy.Migrations
 
             modelBuilder.Entity("ITStudy.Models.CartItem", b =>
                 {
+                    b.HasOne("ITStudy.Models.BuyCourses", null)
+                        .WithMany("List_CartItems")
+                        .HasForeignKey("BuyCoursesId");
+
                     b.HasOne("ITStudy.Models.Cart", "Cart")
                         .WithMany("CartItems")
                         .HasForeignKey("CartId")
@@ -445,6 +556,32 @@ namespace ITStudy.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ITStudy.Models.Vouchers", b =>
+                {
+                    b.HasOne("ITStudy.Models.Courses", "Course")
+                        .WithMany("Voucher")
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("ITStudy.Models.Student", "Student")
+                        .WithMany("Voucher")
+                        .HasForeignKey("StudentId");
+
+                    b.HasOne("ITStudy.Models.Instructors", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("ITStudy.Models.BuyCourses", b =>
+                {
+                    b.Navigation("List_CartItems");
+                });
+
             modelBuilder.Entity("ITStudy.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -458,6 +595,8 @@ namespace ITStudy.Migrations
             modelBuilder.Entity("ITStudy.Models.Courses", b =>
                 {
                     b.Navigation("Lectures");
+
+                    b.Navigation("Voucher");
                 });
 
             modelBuilder.Entity("ITStudy.Models.Instructors", b =>
@@ -468,6 +607,8 @@ namespace ITStudy.Migrations
             modelBuilder.Entity("ITStudy.Models.Student", b =>
                 {
                     b.Navigation("Courses");
+
+                    b.Navigation("Voucher");
                 });
 #pragma warning restore 612, 618
         }

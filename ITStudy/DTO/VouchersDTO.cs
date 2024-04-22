@@ -1,4 +1,6 @@
-﻿namespace ITStudy.DTO;
+﻿using ITStudy.Models;
+
+namespace ITStudy.DTO;
 
 public class VouchersDTO
 {
@@ -8,6 +10,7 @@ public class VouchersDTO
     public long? CourseId { get; set; } = null;
     public DateTime? Public_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
     public DateTime? Expire_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
+    public Status_Vouchers Status { get; set; } = Status_Vouchers.active;
 }
 
 public class Vouchers_AddDTO
@@ -16,6 +19,7 @@ public class Vouchers_AddDTO
     public int Discount { get; set; } = 0;
     public DateTime? Public_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
     public DateTime? Expire_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
+    public Status_Vouchers Status { get; set; } = Status_Vouchers.active;
 }
 
 public class Vouchers_GetDTO
@@ -26,5 +30,6 @@ public class Vouchers_GetDTO
     public int? CourseId { get; set; } = null;
     public DateTime? Public_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
     public DateTime? Expire_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
+    public Status_Vouchers Status { get; set; } = Status_Vouchers.active;
 }
 

@@ -11,6 +11,12 @@ public class Vouchers
     public long? CourseId { get; set; } = null;
     public DateTime? Public_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
     public DateTime? Expire_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
+    public Status_Vouchers Status { get; set; } = Status_Vouchers.active;
+}
+public enum Status_Vouchers
+{
+    active,
+    uses
 }
 public class Vouchers_Add
 {
@@ -18,6 +24,7 @@ public class Vouchers_Add
     public int Discount { get; set; } = 0;
     public DateTime? Public_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
     public DateTime? Expire_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
+    public Status_Vouchers Status { get; set; } = Status_Vouchers.active;
 }
 
 public class Vouchers_Get
@@ -28,4 +35,5 @@ public class Vouchers_Get
     public long? CourseId { get; set; } = null;
     public DateTime? Public_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
     public DateTime? Expire_Date { get; set; } = DateTime.UtcNow.ToUniversalTime();
+    public Status_Vouchers Status { get; set; } = Status_Vouchers.active;
 }

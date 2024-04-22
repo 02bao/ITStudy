@@ -25,7 +25,7 @@ public class UsersRepository(DataContext _context) : IUsersRepository
         return _context.Users.SingleOrDefault(s => s.Id == UserId);
     }
 
-    public Users? Login(Users_Login Login)
+    public Users Login(Users_Login Login)
     {
         Users? users = _context.Users.Where(s => s.UserName == Login.UserName &&
                                             s.Password == Login.Password &&
@@ -36,7 +36,7 @@ public class UsersRepository(DataContext _context) : IUsersRepository
 
     public string Regiter(Users_Register Regis)
     {
-        Users UserEmail = _context.Users.SingleOrDefault(s => s.Email == Regis.Email);
+        Users? UserEmail = _context.Users.SingleOrDefault(s => s.Email == Regis.Email);
         if (UserEmail != null) { return ""; }
         Users NewAccount = new Users()
         {

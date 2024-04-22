@@ -3,7 +3,7 @@
 public class Instructors
 {
     public long Id { get; set; }
-    public Users User { get; set; }
+    public Users? User { get; set; }
     public string TeacherName { get; set; } = string.Empty;
     public string Bio { get; set; } = string.Empty;
     public string Field { get; set; } = string.Empty;

@@ -411,6 +411,9 @@ namespace ITStudy.Migrations
                     b.Property<DateTime?>("Public_Date")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.Property<long?>("StudentId")
                         .HasColumnType("bigint");
 

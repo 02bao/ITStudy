@@ -14,7 +14,7 @@ public enum Status_CartItem
 {
     pending,
     active,
-    order
+    buy
 }
 
 public class CartItem_Add

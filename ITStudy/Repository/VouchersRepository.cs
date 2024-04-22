@@ -22,6 +22,7 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
                 CourseId = null,
                 Public_Date = Vouchers.Public_Date,
                 Expire_Date = ExpireTime.ToUniversalTime(),
+                Status = Status_Vouchers.active,
                 Teacher = teacher,
                 Course = null,
                 Student = null,
@@ -39,6 +40,7 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
                 CourseId = course.Id,
                 Public_Date = Vouchers.Public_Date,
                 Expire_Date = ExpireTime.ToUniversalTime(),
+                Status = Status_Vouchers.active,
                 Teacher = teacher,
                 Course = course,
                 Student = null,
@@ -83,6 +85,7 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
                 CourseId = voucher.CourseId,
                 Public_Date = voucher.Public_Date,
                 Expire_Date = voucher.Expire_Date,
+                Status = voucher.Status,
             });
         }
         return vouchers;
@@ -128,6 +131,7 @@ public class VouchersRepository(DataContext _context) : IVouchersRepository
                     CourseId = CourseIds,
                     Public_Date = voucher.Public_Date,
                     Expire_Date = voucher.Expire_Date,
+                    Status = voucher.Status,
                 });
             }
         }
