@@ -56,5 +56,27 @@ namespace ITStudy.Repository
             _context.SaveChanges();
             return true;
         }
+
+        public List<BuyCourses_Get> GetBySutdentId(long StudentId)
+        {
+            List<BuyCourses_Get> buycourses = new List<BuyCourses_Get> ();
+            var student = _context.Students.SingleOrDefault(s => s.Id == StudentId);
+            if( student == null ) { return buycourses; }
+            var buycourse = _context.BuyCourses.Include(s => s.List_CartItems)
+                                               .ThenInclude(s => s.Courses)
+                                               .Where(s => s.Student.Id == StudentId)
+                                               .Select(s => new BuyCourses_Get()
+                                               {
+                                                   BuyId = s.Id,
+                                                   StudentBuy_Id = student.Id,
+                                                   StudentBuy_Name = student.StudentName,
+                                                   TeacherBy_Name = s.Teacher.TeacherName,
+                                                   TotalAmount = s.TotalAmount,
+                                                   List_CartItem = s.List_CartItems.Select(
+                                                   s => $"CourseId:{s.Courses.Id}  - CourseName:{s.Courses.Title} - LectureCount:{s.Courses.LectureCount} ")
+                                                   .ToList(),
+                                               }).ToList();
+            return buycourse;
+        }
     }
 }

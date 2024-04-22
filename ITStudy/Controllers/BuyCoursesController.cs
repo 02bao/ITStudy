@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ITStudy.DTO;
 using ITStudy.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,5 +15,12 @@ public class BuyCoursesController(
     {
         bool IsSuccess = _buycoursesRepository.BuyNewcourses(StudentId,CartItemIds, VoucherId);
         return IsSuccess ? Ok() : BadRequest();
+    }
+
+    [HttpGet("GetByStudentId")]
+    public IActionResult GetByStudentId([FromQuery] long StudentId )
+    {
+        var BuyCourse = _mapper.Map<List<BuyCourses_GetDTO>>(_buycoursesRepository.GetBySutdentId(StudentId));
+        return Ok(BuyCourse);
     }
 }

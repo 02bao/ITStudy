@@ -19,3 +19,12 @@ public enum Status_Buy
     pending,
     completed
 }
+public class BuyCourses_Get
+{
+    public long BuyId { get; set; }
+    public long StudentBuy_Id { get; set; }
+    public string StudentBuy_Name { get; set; } = string.Empty;
+    public string TeacherBy_Name { get; set; } = string.Empty;
+    public long TotalAmount { get; set; } = 0;
+    public List<string>? List_CartItem { get; set; }
+}
