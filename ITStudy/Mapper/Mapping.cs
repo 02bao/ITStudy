@@ -27,6 +27,7 @@ namespace ITStudy.Mapper
             CreateMap<CartItem,CartItemDTO> ().ReverseMap();
             CreateMap<CartItem_Add,CartItem_AddDTO> ().ReverseMap();
             CreateMap<Vouchers,VouchersDTO> ().ReverseMap();
+            CreateMap<Vouchers_Add,Vouchers_AddDTO> ().ReverseMap();
         }
     }
 }

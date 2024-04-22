@@ -18,6 +18,7 @@ namespace ITStudy.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Vouchers> Vouchers { get; set; }
         //public static string configsql = "Host=dpg-cogb33cf7o1s73fqpvqg-a.singapore-postgres.render.com:5432;Database=renderitstudy;Username=renderitstudy_user;Password=VYTZYnl42MPWN8IZA7CAz1Gl69ZrgUXI";
         public static string configsql = "Host=localhost:5432;Database=Study;Username=postgres;Password=postgres";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
