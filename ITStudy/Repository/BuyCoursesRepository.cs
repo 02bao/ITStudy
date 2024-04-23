@@ -11,7 +11,7 @@ namespace ITStudy.Repository
         {
             Student? student = _context.Students.SingleOrDefault(s => s.Id == StudentId);
             if (student == null) { return false; }
-            long Voucher_Discount = 0;
+            double Voucher_Discount = 0;
             List<CartItem>? cartitems = _context.CartItems.Include(s => s.Courses)
                                                    .ThenInclude(s => s.Teacher)
                                                    .Include(s => s.Cart)
