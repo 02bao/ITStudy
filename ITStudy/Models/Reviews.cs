@@ -7,5 +7,6 @@
         public Courses? Course { get; set; }
         public string Comment { get; set; } = string.Empty;
         public float Rating { get; set; } = 0;
+        public DateTime? PostedAt { get; set; } = DateTime.UtcNow;
     }
 }

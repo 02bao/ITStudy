@@ -31,6 +31,7 @@ namespace ITStudy.Mapper
             CreateMap<Vouchers_Get,Vouchers_GetDTO> ().ReverseMap();
             CreateMap<BuyCourses,BuyCoursesDTO> ().ReverseMap();
             CreateMap<BuyCourses_Get,BuyCourses_GetDTO> ().ReverseMap();
+            CreateMap<Reviews,ReviewsDTO> ().ReverseMap();
         }
     }
 }
