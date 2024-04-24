@@ -23,4 +23,11 @@ public class BuyCoursesController(
         var BuyCourse = _mapper.Map<List<BuyCourses_GetDTO>>(_buycoursesRepository.GetBySutdentId(StudentId));
         return Ok(BuyCourse);
     }
+
+    [HttpGet("GetByTeacherId")]
+    public IActionResult GetByTeacherId([FromQuery] long TeacherId)
+    {
+        var BuyCourse = _mapper.Map<List<BuyCourses_GetDTO>>(_buycoursesRepository.GetBySutdentId(TeacherId));
+        return Ok(BuyCourse);
+    }
 }

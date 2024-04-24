@@ -78,5 +78,29 @@ namespace ITStudy.Repository
                                                }).ToList();
             return buycourse;
         }
+
+        public List<BuyCourses_Get> GetByTeacherId(long TeacherId)
+        {
+
+            List<BuyCourses_Get> buycourses = new List<BuyCourses_Get>();
+            var teacher = _context.Instructors.SingleOrDefault(s => s.Id == TeacherId);
+            if (teacher == null) { return buycourses; }
+            var buycourse = _context.BuyCourses.Include(s => s.Student)
+                                               .Include(s => s.List_CartItems)
+                                               .ThenInclude(s => s.Courses)
+                                               .Where(s => s.Teacher.Id == TeacherId)
+                                               .Select(s => new BuyCourses_Get()
+                                               {
+                                                   BuyId = s.Id,
+                                                   StudentBuy_Id = s.Student.Id,
+                                                   StudentBuy_Name = s.Student.StudentName,
+                                                   TeacherBy_Name = teacher.TeacherName,
+                                                   TotalAmount = s.TotalAmount,
+                                                   List_CartItem = s.List_CartItems.Select(
+                                                   s => $"CourseId:{s.Courses.Id}  - CourseName:{s.Courses.Title} - LectureCount:{s.Courses.LectureCount} ")
+                                                   .ToList(),
+                                               }).ToList();
+            return buycourse;
+        }
     }
 }

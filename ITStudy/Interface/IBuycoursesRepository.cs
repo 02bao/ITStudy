@@ -6,5 +6,6 @@ namespace ITStudy.Interface
     {
         bool BuyNewcourses(long StudentId, List<long> CartItemIds, long VoucherId);
         List<BuyCourses_Get> GetBySutdentId(long StudentId);
+        List<BuyCourses_Get> GetByTeacherId(long TeacherId);
     }
 }
