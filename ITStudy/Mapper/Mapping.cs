@@ -34,6 +34,7 @@ namespace ITStudy.Mapper
             CreateMap<Reviews,ReviewsDTO> ().ReverseMap();
             CreateMap<Reviews_Create,Reviews_CreateDTO> ().ReverseMap();
             CreateMap<Favorite,FavoriteDTO> ().ReverseMap();
+            CreateMap<Favorite_Teacher,Favorite_TeacherDTO> ().ReverseMap();
         }
     }
 }
