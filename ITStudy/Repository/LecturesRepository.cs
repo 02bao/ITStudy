@@ -6,7 +6,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace ITStudy.Repository
 {
-    public class LecturesRepository(DataContext _context) : ILecturesRepository
+    public class LecturesRepository(
+        DataContext _context,
+        INotiRepository _notiRepository) : ILecturesRepository
     {
         public bool CreateNew(long CourseId, Lectures_Create lectures)
         {
@@ -22,6 +24,7 @@ namespace ITStudy.Repository
             _context.Lectures.Add(NewLectures);
             course.LectureCount += 1;
             _context.SaveChanges();
+            _notiRepository.SendNotiForLectures(course, NewLectures);
             return true;
         }
 

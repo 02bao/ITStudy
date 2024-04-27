@@ -32,6 +32,7 @@ namespace ITStudy
             builder.Services.AddScoped<IBuycoursesRepository, BuyCoursesRepository>();
             builder.Services.AddScoped<IReviewsRepository, ReviewsRepository>();
             builder.Services.AddScoped<IFavoriteRepository, FavoriteRepository>();
+            builder.Services.AddScoped<INotiRepository, NotiRepository>();
 
             var app = builder.Build();
 

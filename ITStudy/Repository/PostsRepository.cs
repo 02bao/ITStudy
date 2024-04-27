@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ITStudy.Repository;
 
-public class PostsRepository(DataContext _context) : IPostRepository
+public class PostsRepository(
+    DataContext _context,
+    INotiRepository _notiRepository) : IPostRepository
 {
     public bool CreateNewPosts(long TeacherId, Posts_Create Create)
     {
@@ -21,6 +23,7 @@ public class PostsRepository(DataContext _context) : IPostRepository
         _context.Posts.Add(NewPost);
         teacher.Posts += 1;
         _context.SaveChanges();
+        _notiRepository.SendNotiForPosts(teacher, NewPost);
         return true;
     }
 
